@@ -1,0 +1,2180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merece Quanto</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- React and ReactDOM from CDN -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        :root {
+            /* Executive Color Palette */
+            --executive-navy: #0f1419;
+            --corporate-blue: #1a2332;
+            --professional-slate: #2a3441;
+            --premium-gold: #d4af37;
+            --success-emerald: #059669;
+            --warning-amber: #d97706;
+            --error-crimson: #dc2626;
+            
+            /* Neutral Corporate Scale */
+            --white: #ffffff;
+            --gray-50: #f8fafc;
+            --gray-100: #f1f5f9;
+            --gray-200: #e2e8f0;
+            --gray-300: #cbd5e1;
+            --gray-400: #94a3b8;
+            --gray-500: #64748b;
+            --gray-600: #475569;
+            --gray-700: #334155;
+            --gray-800: #1e293b;
+            --gray-900: #0f172a;
+            
+            /* Professional Gradients */
+            --gradient-executive: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-corporate: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-premium: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            --gradient-success: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            
+            /* Enterprise Shadows */
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            --shadow-premium: 0 32px 64px -12px rgba(0, 0, 0, 0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, var(--executive-navy) 0%, var(--corporate-blue) 50%, var(--professional-slate) 100%);
+            min-height: 100vh;
+            color: var(--gray-50);
+            font-weight: 400;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        #root {
+            min-height: 100vh;
+        }
+
+        /* Content wrapper adjustments */
+        .main-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Executive Glass Morphism */
+        .executive-card {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            box-shadow: var(--shadow-2xl);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .executive-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: var(--gradient-executive);
+        }
+
+        .executive-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-premium);
+            border-color: rgba(255, 255, 255, 0.12);
+        }
+
+        /* Corporate Header with Auto-Hide */
+        .corporate-header {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(32px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .corporate-header.hidden {
+            transform: translateY(-100%);
+        }
+
+        .corporate-header.compact {
+            padding: 16px 32px !important;
+        }
+
+        .corporate-header.compact h1 {
+            font-size: 2rem !important;
+            margin-bottom: 0 !important;
+        }
+
+        .corporate-header.compact p {
+            display: none;
+        }
+
+        /* Professional Landing Page */
+        .hero-section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-top: 120px;
+            background: linear-gradient(135deg, var(--executive-navy) 0%, var(--corporate-blue) 50%, var(--professional-slate) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 20%, rgba(102, 126, 234, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 80%, rgba(212, 175, 55, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 32px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .hero-title {
+            font-size: 4.5rem;
+            font-weight: 800;
+            background: var(--gradient-executive);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 24px;
+            line-height: 1.1;
+            letter-spacing: -0.025em;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: var(--gray-200);
+            margin-bottom: 16px;
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        .hero-description {
+            font-size: 1.125rem;
+            color: var(--gray-400);
+            margin-bottom: 48px;
+            line-height: 1.6;
+        }
+
+        .upload-hero-zone {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(24px);
+            border: 2px dashed rgba(255, 255, 255, 0.15);
+            border-radius: 24px;
+            padding: 64px 32px;
+            margin: 48px auto;
+            max-width: 600px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .upload-hero-zone::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--gradient-executive);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .upload-hero-zone:hover::before {
+            opacity: 0.08;
+        }
+
+        .upload-hero-zone:hover {
+            border-color: rgba(102, 126, 234, 0.6);
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-premium);
+        }
+
+        .upload-hero-zone.dragover {
+            border-color: var(--success-emerald);
+            background: rgba(5, 150, 105, 0.1);
+            transform: scale(1.02);
+        }
+
+        /* Professional Upload Zone */
+        .premium-upload-zone {
+            border: 2px dashed rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.01);
+            backdrop-filter: blur(20px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .premium-upload-zone::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--gradient-executive);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .premium-upload-zone:hover::before {
+            opacity: 0.05;
+        }
+
+        .premium-upload-zone:hover {
+            border-color: rgba(102, 126, 234, 0.5);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .premium-upload-zone.dragover {
+            border-color: var(--success-emerald);
+            background: rgba(5, 150, 105, 0.05);
+            transform: scale(1.01);
+        }
+
+        /* Executive Button System */
+        .executive-button {
+            background: var(--gradient-executive);
+            color: var(--white);
+            border: none;
+            border-radius: 14px;
+            padding: 14px 28px;
+            font-weight: 600;
+            font-size: 14px;
+            letter-spacing: 0.025em;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: var(--shadow-lg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .executive-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .executive-button:hover::before {
+            left: 100%;
+        }
+
+        .executive-button:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .executive-button:active {
+            transform: translateY(-1px);
+        }
+
+        .executive-button:disabled {
+            background: var(--gray-600);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .secondary-button {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--gray-200);
+            border-radius: 14px;
+            padding: 14px 28px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .secondary-button:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Professional Input System */
+        .executive-input {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: var(--gray-50);
+            padding: 16px 20px;
+            border-radius: 14px;
+            width: 100%;
+            font-size: 15px;
+            font-weight: 400;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(20px);
+        }
+
+        .executive-input:focus {
+            outline: none;
+            border-color: rgba(102, 126, 234, 0.5);
+            background: rgba(255, 255, 255, 0.05);
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .executive-input::placeholder {
+            color: var(--gray-400);
+            font-weight: 400;
+        }
+
+        /* Professional Loading & Status */
+        .executive-spinner {
+            width: 24px;
+            height: 24px;
+            border: 2px solid rgba(102, 126, 234, 0.2);
+            border-top: 2px solid var(--premium-gold);
+            border-radius: 50%;
+            animation: executiveSpin 1s linear infinite;
+            display: inline-block;
+        }
+
+        @keyframes executiveSpin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .executive-alert {
+            background: rgba(220, 38, 38, 0.1);
+            border: 1px solid rgba(220, 38, 38, 0.2);
+            color: #fca5a5;
+            padding: 16px 20px;
+            border-radius: 14px;
+            margin: 16px 0;
+            backdrop-filter: blur(20px);
+            border-left: 4px solid var(--error-crimson);
+        }
+
+        .executive-success {
+            background: rgba(5, 150, 105, 0.1);
+            border: 1px solid rgba(5, 150, 105, 0.2);
+            color: #6ee7b7;
+            padding: 16px 20px;
+            border-radius: 14px;
+            margin: 16px 0;
+            backdrop-filter: blur(20px);
+            border-left: 4px solid var(--success-emerald);
+        }
+        
+        /* Executive Carousel System */
+        .executive-carousel {
+            position: relative;
+            overflow: hidden;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            margin: 24px 0;
+            box-shadow: var(--shadow-2xl);
+            padding: 16px;
+        }
+        
+        .carousel-track {
+            display: flex;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            align-items: stretch;
+        }
+        
+        .executive-carousel-card {
+            flex: 0 0 calc(100% - 32px);
+            width: calc(100% - 32px);
+            margin: 0 16px;
+            padding: 32px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            min-height: 160px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-sizing: border-box;
+        }
+
+        .executive-carousel-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--gradient-executive);
+        }
+        
+        .executive-carousel-card:hover {
+            transform: translateY(-4px);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%);
+            border-color: rgba(255, 255, 255, 0.1);
+            box-shadow: var(--shadow-xl);
+        }
+        
+        .executive-carousel-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--gray-200);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(20px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .executive-carousel-nav:hover {
+            background: rgba(102, 126, 234, 0.2);
+            border-color: rgba(102, 126, 234, 0.3);
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: var(--shadow-xl);
+            color: var(--white);
+        }
+        
+        .executive-carousel-nav:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            transform: translateY(-50%);
+        }
+        
+        .carousel-prev {
+            left: 16px;
+        }
+        
+        .carousel-next {
+            right: 16px;
+        }
+        
+        .carousel-indicators {
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            gap: 12px;
+        }
+        
+        .carousel-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid transparent;
+            border: none;
+        }
+
+        .carousel-indicator.active {
+            background: var(--premium-gold);
+            transform: scale(1.3);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+        }
+
+        .carousel-indicator:hover {
+            background: rgba(255, 255, 255, 0.4);
+            transform: scale(1.1);
+        }
+        
+        .executive-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid transparent;
+        }
+        
+        .executive-indicator.active {
+            background: var(--premium-gold);
+            transform: scale(1.3);
+            border-color: rgba(212, 175, 55, 0.3);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+        }
+        
+        .executive-indicator:hover {
+            background: rgba(255, 255, 255, 0.4);
+            transform: scale(1.1);
+        }
+        
+        .executive-section {
+            margin-bottom: 32px;
+        }
+        
+        .executive-title {
+            text-align: center;
+            margin-bottom: 24px;
+            font-weight: 700;
+            font-size: 20px;
+            background: var(--gradient-executive);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 0.025em;
+        }
+        
+        /* Executive Two-Column Layout */
+        .executive-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            height: calc(100vh - 120px);
+            padding: 0;
+        }
+        
+        .executive-chat-column {
+            display: flex;
+            flex-direction: column;
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 24px;
+            padding: 0;
+            overflow: hidden;
+            box-shadow: var(--shadow-2xl);
+        }
+        
+        .executive-analysis-column {
+            display: flex;
+            flex-direction: column;
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 24px;
+            padding: 0;
+            overflow: hidden;
+            box-shadow: var(--shadow-2xl);
+        }
+
+        /* Professional Chat System */
+        .executive-chat-header {
+            padding: 24px 32px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.01);
+            text-align: center;
+        }
+
+        .executive-chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 24px 32px;
+            margin: 0;
+        }
+
+        .executive-chat-input {
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 24px 32px;
+            background: rgba(255, 255, 255, 0.01);
+        }
+
+        .executive-analysis-header {
+            padding: 24px 32px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.01);
+            text-align: center;
+        }
+
+        .executive-analysis-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 24px 32px;
+        }
+        
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem 1.5rem;
+            margin: 0;
+        }
+        
+        .chat-input-section {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            background: rgba(15, 23, 42, 0.5);
+            backdrop-filter: blur(10px);
+        }
+        
+        .column-header {
+            text-align: center;
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(6, 182, 212, 0.1) 100%);
+            position: relative;
+        }
+
+        .column-header::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+        
+        .column-title {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .column-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1.5rem;
+        }
+        
+        /* Executive Scrollbar System */
+        .executive-chat-messages::-webkit-scrollbar,
+        .executive-analysis-content::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .executive-chat-messages::-webkit-scrollbar-track,
+        .executive-analysis-content::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 6px;
+        }
+        
+        .executive-chat-messages::-webkit-scrollbar-thumb,
+        .executive-analysis-content::-webkit-scrollbar-thumb {
+            background: var(--gradient-executive);
+            border-radius: 6px;
+        }
+        
+        .executive-chat-messages::-webkit-scrollbar-thumb:hover,
+        .executive-analysis-content::-webkit-scrollbar-thumb:hover {
+            background: var(--gradient-premium);
+        }
+
+        /* Executive Typography */
+        .executive-message {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 20px 24px;
+            margin-bottom: 16px;
+            backdrop-filter: blur(20px);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            animation: slideInMessage 0.4s ease-out;
+        }
+
+        .executive-message:hover {
+            border-color: rgba(255, 255, 255, 0.08);
+            transform: translateY(-1px);
+        }
+
+        .gradient-text-executive {
+            background: var(--gradient-executive);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+        }
+        
+        /* Executive Responsive Design */
+        @media (max-width: 1200px) {
+            .executive-layout {
+                gap: 24px;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .executive-layout {
+                grid-template-columns: 1fr;
+                height: auto;
+                gap: 20px;
+            }
+            
+            .executive-analysis-content,
+            .executive-chat-messages {
+                max-height: 500px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .executive-layout {
+                gap: 16px;
+            }
+            
+            .executive-chat-column,
+            .executive-analysis-column {
+                border-radius: 20px;
+            }
+
+            .executive-chat-header,
+            .executive-analysis-header,
+            .executive-chat-input {
+                padding: 20px 24px;
+            }
+
+            .executive-chat-messages,
+            .executive-analysis-content {
+                padding: 20px 24px;
+            }
+
+            .executive-button {
+                padding: 12px 24px;
+                font-size: 13px;
+            }
+
+            .executive-carousel-card {
+                padding: 24px;
+                min-height: 140px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .executive-layout {
+                gap: 12px;
+            }
+
+            .executive-chat-header,
+            .executive-analysis-header,
+            .executive-chat-input {
+                padding: 16px 20px;
+            }
+
+            .executive-chat-messages,
+            .executive-analysis-content {
+                padding: 16px 20px;
+            }
+        }
+
+        /* Professional Animations */
+        @keyframes slideInMessage {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .fade-in-scale {
+            animation: fadeInScale 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        @keyframes slideIn {
+            from { 
+                opacity: 0; 
+                transform: translateY(20px) scale(0.95);
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .user-chat-bubble {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 1rem 1.25rem;
+            border-radius: 1.25rem 1.25rem 0.25rem 1.25rem;
+            max-width: 85%;
+            margin-left: auto;
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .user-chat-bubble::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .assistant-chat-bubble {
+            background: linear-gradient(135deg, var(--bg-tertiary) 0%, var(--surface) 100%);
+            color: var(--text-primary);
+            padding: 1rem 1.25rem;
+            border-radius: 1.25rem 1.25rem 1.25rem 0.25rem;
+            max-width: 85%;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .message-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.75rem;
+            gap: 0.5rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .user-header {
+            justify-content: flex-end;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .assistant-header {
+            justify-content: flex-start;
+            color: var(--text-muted);
+        }
+        
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 1.25rem;
+            background: linear-gradient(135deg, var(--bg-tertiary) 0%, var(--surface) 100%);
+            border-radius: 1.25rem 1.25rem 1.25rem 0.25rem;
+            margin-bottom: 1.5rem;
+            max-width: 200px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .typing-dots {
+            display: flex;
+            gap: 0.375rem;
+        }
+        
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 50%;
+            animation: typingPulse 1.6s infinite;
+        }
+        
+        .typing-dot:nth-child(1) { animation-delay: 0s; }
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+        
+        @keyframes typingPulse {
+            0%, 60%, 100% { 
+                transform: scale(1);
+                opacity: 0.5;
+            }
+            30% { 
+                transform: scale(1.2);
+                opacity: 1;
+            }
+        }
+
+        /* Header gradient text */
+        .gradient-text {
+            background: linear-gradient(135deg, var(--primary-light) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Page header improvements */
+        .page-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 2rem 0;
+        }
+
+        .page-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-light) 0%, var(--secondary) 50%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .page-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+        }
+
+        .reset-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            border-radius: 0.75rem;
+            color: var(--primary-light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .reset-button:hover {
+            background: rgba(99, 102, 241, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-gray-200">
+    <div id="root"></div>
+
+    <script>
+        // API Key - Set your AI Studio API key here
+        const API_KEY = 'AIzaSyB5Ku-bjDLH67aqtwcayTfIB7FNccCL4X8'; // Replace with your actual AI Studio API key
+        
+        // Check if API key is set
+        if (!API_KEY || API_KEY === 'AIzaSyB5Ku-bjDLH67aqtwcayTfIB7FNccCL4X8') {
+            console.error('Please set your AI Studio API key in the API_KEY variable');
+        }
+
+        // AI Studio API functions
+        const fileToBase64 = (file) => {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => {
+                    const result = reader.result;
+                    resolve(result.split(',')[1]);
+                };
+                reader.onerror = (error) => reject(error);
+            });
+        };
+
+        // Call AI Studio API directly
+        const callAIStudio = async (prompt, fileBase64, mimeType) => {
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`;
+            
+            const requestBody = {
+                contents: [{
+                    parts: [
+                        { text: prompt }
+                    ]
+                }]
+            };
+
+            // Add file data if provided
+            if (fileBase64 && mimeType) {
+                requestBody.contents[0].parts.push({
+                    inline_data: {
+                        mime_type: mimeType,
+                        data: fileBase64
+                    }
+                });
+            }
+
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(requestBody)
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.text();
+                    throw new Error(`AI Studio API error: ${response.status} - ${errorData}`);
+                }
+
+                const data = await response.json();
+                return data.candidates[0].content.parts[0].text;
+            } catch (error) {
+                console.error('AI Studio API call failed:', error);
+                throw error;
+            }
+        };
+
+        // Analyze CV function - now returns both JSON analysis and chat explanation
+        const analyzeCV = async (file) => {
+            if (!API_KEY || API_KEY === 'YOUR_AI_STUDIO_API_KEY_HERE') {
+                throw new Error('AI Studio API key not configured. Please set your API key.');
+            }
+
+            try {
+                const base64 = await fileToBase64(file);
+                
+                // First call: Get structured JSON analysis
+                const jsonPrompt = `
+Analise este CV brasileiro e forneça APENAS este JSON (sem texto extra ou emojis):
+
+{
+  "jobTitle": "melhor cargo que esta pessoa pode alcançar considerando sua formação, experiência e potencial profissional",
+  "jobSummary": "resumo profissional em 1-2 frases destacando o potencial",
+  "strengths": ["força 1", "força 2", "força 3", "força 4"],
+  "improvements": ["melhoria 1", "melhoria 2", "melhoria 3", "melhoria 4"],
+  "salaryRange": {
+    "min": valor_min,
+    "max": valor_max,
+    "currency": "BRL"
+  },
+  "careerAdvice": "conselho conciso de carreira para alcançar o cargo ideal",
+  "nextSteps": ["passo 1", "passo 2", "passo 3", "passo 4"]
+}
+
+IMPORTANTE: O jobTitle deve ser o MELHOR cargo possível que a pessoa pode alcançar (não o atual), considerando:
+- Formação acadêmica completa
+- Experiência acumulada
+- Habilidades demonstradas
+- Potencial de crescimento
+- Tendências do mercado brasileiro
+
+Responda APENAS com o JSON válido, SEM emojis ou texto adicional.
+`;
+
+                // Second call: Get conversational explanation
+                const chatPrompt = `
+Como consultor de carreira, forneça uma análise CONCISA (máximo 100 palavras) destacando:
+
+• Impressão geral do perfil
+• Principal ponto forte identificado  
+• Recomendação imediata mais importante
+
+Seja direto, encorajador e profissional. Fale diretamente com a pessoa de forma conversacional. NÃO use emojis.
+`;
+
+                // Make both API calls
+                const [jsonResponse, chatResponse] = await Promise.all([
+                    callAIStudio(jsonPrompt, base64, file.type),
+                    callAIStudio(chatPrompt, base64, file.type)
+                ]);
+                
+                // Parse JSON response
+                let analysisResult;
+                try {
+                    const jsonMatch = jsonResponse.match(/```(?:json)?\s*([\s\S]*?)\s*```/);
+                    const jsonText = jsonMatch ? jsonMatch[1] : jsonResponse;
+                    analysisResult = JSON.parse(jsonText.trim());
+                } catch (parseError) {
+                    console.error('Failed to parse JSON response:', jsonResponse);
+                    throw new Error('Resposta da API não está em formato JSON válido');
+                }
+
+                // Create chat context
+                const chatContext = {
+                    file: { base64, mimeType: file.type, name: file.name },
+                    analysis: analysisResult,
+                    history: [
+                        { role: 'user', content: 'Analise meu CV' },
+                        { role: 'assistant', content: chatResponse }
+                    ]
+                };
+
+                return {
+                    analysis: analysisResult,
+                    chatExplanation: chatResponse,
+                    chat: chatContext
+                };
+            } catch (error) {
+                console.error('Error in analyzeCV:', error);
+                throw new Error(`Erro ao analisar o CV: ${error.message}`);
+            }
+        };
+
+        // Continue chat function - now can also update carousel analysis
+        const continueChat = async (chatContext, message, shouldUpdateAnalysis = false) => {
+            if (!chatContext) {
+                throw new Error('Contexto de chat não encontrado');
+            }
+
+            try {
+                if (shouldUpdateAnalysis) {
+                    // If user is asking for analysis updates, get both chat response and updated JSON
+                    const chatPrompt = `
+Responda CONCISAMENTE (máximo 80 palavras) sobre a atualização:
+
+Solicitação: ${message}
+
+Cargo ideal identificado: ${chatContext.analysis.jobTitle}
+Pontos fortes: ${chatContext.analysis.strengths.slice(0, 2).join(', ')}
+
+Explique brevemente as mudanças feitas e por quê. Seja direto e útil.
+`;
+
+                    const updatePrompt = `
+Baseado na solicitação do usuário: "${message}"
+
+Atualize a análise do CV anterior conforme solicitado. Retorne APENAS o JSON atualizado:
+
+{
+  "jobTitle": "melhor cargo que esta pessoa pode alcançar considerando sua formação, experiência e potencial de crescimento",
+  "jobSummary": "resumo profissional destacando o potencial de carreira",
+  "strengths": ["ponto forte 1", "ponto forte 2", "ponto forte 3", "ponto forte 4", "ponto forte 5"],
+  "improvements": ["sugestão de melhoria 1", "sugestão de melhoria 2", "sugestão de melhoria 3", "sugestão de melhoria 4", "sugestão de melhoria 5"],
+  "salaryRange": {
+    "min": valor_minimo_numerico,
+    "max": valor_maximo_numerico,
+    "currency": "BRL"
+  },
+  "careerAdvice": "conselhos de carreira para alcançar o cargo ideal",
+  "nextSteps": ["próximo passo 1", "próximo passo 2", "próximo passo 3", "próximo passo 4", "próximo passo 5"]
+}
+
+Análise anterior para referência:
+${JSON.stringify(chatContext.analysis, null, 2)}
+
+Responda APENAS com o JSON atualizado.
+`;
+
+                    const [chatResponse, updateResponse] = await Promise.all([
+                        callAIStudio(chatPrompt),
+                        callAIStudio(updatePrompt)
+                    ]);
+
+                    // Parse updated analysis
+                    let updatedAnalysis;
+                    try {
+                        const jsonMatch = updateResponse.match(/```(?:json)?\s*([\s\S]*?)\s*```/);
+                        const jsonText = jsonMatch ? jsonMatch[1] : updateResponse;
+                        updatedAnalysis = JSON.parse(jsonText.trim());
+                        
+                        // Update the context with new analysis
+                        chatContext.analysis = updatedAnalysis;
+                    } catch (parseError) {
+                        console.error('Failed to parse updated JSON:', updateResponse);
+                        // If JSON parsing fails, just continue with chat response
+                        updatedAnalysis = null;
+                    }
+
+                    // Update chat history
+                    chatContext.history.push(
+                        { role: 'user', content: message },
+                        { role: 'assistant', content: chatResponse }
+                    );
+
+                    return {
+                        chatResponse,
+                        updatedAnalysis,
+                        hasUpdate: updatedAnalysis !== null
+                    };
+                } else {
+                    // Regular chat without analysis update
+                    const conversationPrompt = `
+Responda CONCISAMENTE (máximo 60 palavras) baseado no CV analisado:
+
+Pergunta: ${message}
+
+Contexto:
+- Cargo ideal identificado: ${chatContext.analysis.jobTitle}
+- Principais forças: ${chatContext.analysis.strengths.slice(0, 2).join(', ')}
+
+Dê uma resposta direta, prática e útil. Seja conversacional mas objetivo. NÃO use emojis.
+`;
+
+                    const response = await callAIStudio(conversationPrompt);
+                    
+                    // Update chat history
+                    chatContext.history.push(
+                        { role: 'user', content: message },
+                        { role: 'assistant', content: response }
+                    );
+
+                    return {
+                        chatResponse: response,
+                        updatedAnalysis: null,
+                        hasUpdate: false
+                    };
+                }
+            } catch (error) {
+                console.error('Error in continueChat:', error);
+                throw new Error(`Erro no chat: ${error.message}`);
+            }
+        };
+
+        // React Components using React.createElement (no JSX)
+        const { useState, useCallback, useEffect, useRef, createElement: e } = React;
+
+        // Icons
+        const UploadIcon = ({ className = 'w-8 h-8 text-gray-400' }) => e('svg', {
+            className,
+            fill: 'none',
+            stroke: 'currentColor',
+            viewBox: '0 0 24 24'
+        }, e('path', {
+            strokeLinecap: 'round',
+            strokeLinejoin: 'round',
+            strokeWidth: 2,
+            d: 'M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12'
+        }));
+
+        const SendIcon = () => e('svg', {
+            className: 'w-4 h-4',
+            fill: 'none',
+            stroke: 'currentColor',
+            viewBox: '0 0 24 24'
+        }, e('path', {
+            strokeLinecap: 'round',
+            strokeLinejoin: 'round',
+            strokeWidth: 2,
+            d: 'M12 19l9 2-9-18-9 18 9-2zm0 0v-8'
+        }));
+
+        const UserIcon = () => e('svg', {
+            className: 'w-6 h-6',
+            fill: 'none',
+            stroke: 'currentColor',
+            viewBox: '0 0 24 24'
+        }, e('path', {
+            strokeLinecap: 'round',
+            strokeLinejoin: 'round',
+            strokeWidth: 2,
+            d: 'M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z'
+        }));
+
+        const BotIcon = () => e('svg', {
+            className: 'w-6 h-6',
+            fill: 'none',
+            stroke: 'currentColor',
+            viewBox: '0 0 24 24'
+        }, e('path', {
+            strokeLinecap: 'round',
+            strokeLinejoin: 'round',
+            strokeWidth: 2,
+            d: 'M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z'
+        }));
+
+        const ChevronLeftIcon = () => e('svg', {
+            className: 'w-5 h-5',
+            fill: 'none',
+            stroke: 'currentColor',
+            viewBox: '0 0 24 24'
+        }, e('path', {
+            strokeLinecap: 'round',
+            strokeLinejoin: 'round',
+            strokeWidth: 2,
+            d: 'M15 19l-7-7 7-7'
+        }));
+
+        const ChevronRightIcon = () => e('svg', {
+            className: 'w-5 h-5',
+            fill: 'none',
+            stroke: 'currentColor',
+            viewBox: '0 0 24 24'
+        }, e('path', {
+            strokeLinecap: 'round',
+            strokeLinejoin: 'round',
+            strokeWidth: 2,
+            d: 'M9 5l7 7-7 7'
+        }));
+
+        // Typing Indicator Component
+        const TypingIndicator = () => {
+            return e('div', {
+                className: 'typing-indicator'
+            }, [
+                e(BotIcon, { key: 'icon' }),
+                e('span', {
+                    key: 'text',
+                    className: 'ml-2 text-sm text-gray-400'
+                }, 'Assistente está digitando'),
+                e('div', {
+                    key: 'dots',
+                    className: 'typing-dots ml-2'
+                }, [
+                    e('div', { key: '1', className: 'typing-dot' }),
+                    e('div', { key: '2', className: 'typing-dot' }),
+                    e('div', { key: '3', className: 'typing-dot' })
+                ])
+            ]);
+        };
+
+        // Carousel Components
+        const CarouselCard = ({ content, icon, color = 'blue' }) => {
+            return e('div', {
+                className: 'executive-carousel-card'
+            }, [
+                e('div', {
+                    key: 'icon',
+                    className: `text-3xl mb-2 text-${color}-400`
+                }, icon || ''),
+                e('p', {
+                    key: 'content',
+                    className: 'text-sm leading-relaxed'
+                }, content)
+            ]);
+        };
+
+        const Carousel = ({ title, items, icon, color = 'blue' }) => {
+            const [currentIndex, setCurrentIndex] = useState(0);
+            
+            const nextSlide = () => {
+                setCurrentIndex((prev) => (prev + 1) % items.length);
+            };
+            
+            const prevSlide = () => {
+                setCurrentIndex((prev) => (prev - 1 + items.length) % items.length);
+            };
+            
+            const goToSlide = (index) => {
+                setCurrentIndex(index);
+            };
+
+            if (!items || items.length === 0) return null;
+
+            return e('div', {
+                className: 'section-carousel'
+            }, [
+                e('h3', {
+                    key: 'title',
+                    className: `section-title text-lg font-semibold text-${color}-400 mb-4`
+                }, title),
+                e('div', {
+                    key: 'carousel',
+                    className: 'executive-carousel'
+                }, [
+                    e('div', {
+                        key: 'wrapper',
+                        className: 'carousel-track',
+                        style: {
+                            transform: `translateX(-${currentIndex * 100}%)`
+                        }
+                    }, items.map((item, index) => 
+                        e(CarouselCard, {
+                            key: index,
+                            content: item,
+                            icon: icon,
+                            color: color
+                        })
+                    )),
+                    
+                    // Navigation buttons
+                    items.length > 1 && e('button', {
+                        key: 'prev',
+                        className: 'executive-carousel-nav carousel-prev',
+                        onClick: prevSlide,
+                        disabled: currentIndex === 0
+                    }, e(ChevronLeftIcon)),
+                    
+                    items.length > 1 && e('button', {
+                        key: 'next',
+                        className: 'executive-carousel-nav carousel-next',
+                        onClick: nextSlide,
+                        disabled: currentIndex === items.length - 1
+                    }, e(ChevronRightIcon))
+                ]),
+                
+                // Indicators
+                items.length > 1 && e('div', {
+                    key: 'indicators',
+                    className: 'carousel-indicators'
+                }, items.map((_, index) =>
+                    e('button', {
+                        key: index,
+                        className: `carousel-indicator ${index === currentIndex ? 'active' : ''}`,
+                        onClick: () => goToSlide(index)
+                    })
+                ))
+            ]);
+        };
+
+        // File Upload Component
+        const FileUpload = ({ onFileUpload, isLoading, heroMode = false }) => {
+            const [dragOver, setDragOver] = useState(false);
+            const fileInputRef = useRef(null);
+
+            const handleDragOver = (e) => {
+                e.preventDefault();
+                setDragOver(true);
+            };
+
+            const handleDragLeave = (e) => {
+                e.preventDefault();
+                setDragOver(false);
+            };
+
+            const handleDrop = (e) => {
+                e.preventDefault();
+                setDragOver(false);
+                
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    onFileUpload(files[0]);
+                }
+            };
+
+            const handleFileSelect = (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    onFileUpload(file);
+                }
+            };
+
+            const handleClick = () => {
+                if (fileInputRef.current) {
+                    fileInputRef.current.click();
+                }
+            };
+
+            const uploadZoneClass = heroMode 
+                ? `upload-hero-zone ${dragOver ? 'dragover' : ''}`
+                : `premium-upload-zone executive-card p-16 text-center cursor-pointer ${dragOver ? 'dragover' : ''}`;
+
+            return e('div', {
+                className: uploadZoneClass,
+                onDragOver: handleDragOver,
+                onDragLeave: handleDragLeave,
+                onDrop: handleDrop,
+                onClick: handleClick
+            }, [
+                e('input', {
+                    key: 'file-input',
+                    ref: fileInputRef,
+                    type: 'file',
+                    accept: '.pdf,.doc,.docx,.txt',
+                    onChange: handleFileSelect,
+                    style: { display: 'none' },
+                    disabled: isLoading
+                }),
+                e('div', { key: 'upload-content', className: 'flex flex-col items-center relative z-10' }, [
+                    e(UploadIcon, { 
+                        key: 'icon',
+                        className: heroMode ? 'w-20 h-20 text-gray-300' : ''
+                    }),
+                    e('p', {
+                        key: 'text',
+                        className: heroMode 
+                            ? 'mt-6 text-2xl font-semibold text-gray-200'
+                            : 'mt-4 text-lg font-medium'
+                    }, heroMode 
+                        ? 'Envie seu CV para começar'
+                        : 'Clique ou arraste seu CV aqui'),
+                    e('p', {
+                        key: 'subtitle',
+                        className: heroMode
+                            ? 'mt-3 text-lg text-gray-400'
+                            : 'mt-2 text-sm text-gray-400'
+                    }, heroMode
+                        ? 'Arraste e solte ou clique para selecionar • PDF, DOC, DOCX, TXT'
+                        : 'Suporte para PDF, DOC, DOCX e TXT'),
+                    isLoading && e('div', {
+                        key: 'loading',
+                        className: 'mt-6 flex flex-col items-center'
+                    }, [
+                        e('div', { key: 'spinner', className: 'executive-spinner mb-3' }),
+                        e('span', { 
+                            key: 'text',
+                            className: 'text-lg font-medium text-gray-300'
+                        }, 'Analisando seu CV...')
+                    ])
+                ])
+            ]);
+        };
+
+        // Message Components
+        const FilePreviewMessage = ({ message }) => {
+            return e('div', {
+                className: 'message user-message'
+            }, [
+                e('div', {
+                    key: 'header',
+                    className: 'flex items-center mb-2'
+                }, [
+                    e(UserIcon, { key: 'icon' }),
+                    e('span', {
+                        key: 'label',
+                        className: 'ml-2 font-medium'
+                    }, 'Você')
+                ]),
+                e('div', {
+                    key: 'content',
+                    className: 'file-preview'
+                }, [
+                    e('p', {
+                        key: 'filename',
+                        className: 'font-medium'
+                    }, `${message.content.file.name}`),
+                    e('p', {
+                        key: 'status',
+                        className: 'text-sm text-gray-400 mt-2'
+                    }, 'CV carregado com sucesso!')
+                ])
+            ]);
+        };
+
+        const AnalysisMessage = ({ message }) => {
+            const analysis = message.content.analysis;
+            
+            return e('div', {
+                className: 'message bot-message'
+            }, [
+                e('div', {
+                    key: 'header',
+                    className: 'flex items-center mb-6'
+                }, [
+                    e(BotIcon, { key: 'icon' }),
+                    e('span', {
+                        key: 'label',
+                        className: 'ml-2 font-medium'
+                    }, 'Assistente de Carreira')
+                ]),
+                e('div', {
+                    key: 'content',
+                    className: 'space-y-4'
+                }, [
+                    // Job Title (no carousel needed, single item)
+                    e('div', { key: 'job-title', className: 'mb-6' }, [
+                        e('h3', {
+                            className: 'text-lg font-semibold text-blue-400 mb-3 text-center'
+                        }, 'Título Profissional'),
+                        e('div', {
+                            className: 'executive-carousel-card'
+                        }, [
+                            e('div', {
+                                className: 'text-3xl mb-2 text-blue-400'
+                            }, ''),
+                            e('p', {
+                                className: 'text-center font-medium'
+                            }, analysis.jobTitle)
+                        ])
+                    ]),
+
+                    // Job Summary (no carousel needed, single item)
+                    e('div', { key: 'summary', className: 'mb-6' }, [
+                        e('h3', {
+                            className: 'text-lg font-semibold text-blue-400 mb-3 text-center'
+                        }, 'Resumo Profissional'),
+                        e('div', {
+                            className: 'executive-carousel-card'
+                        }, [
+                            e('div', {
+                                className: 'text-3xl mb-2 text-blue-400'
+                            }, ''),
+                            e('p', {
+                                className: 'text-center leading-relaxed'
+                            }, analysis.jobSummary)
+                        ])
+                    ]),
+
+                    // Strengths Carousel
+                    analysis.strengths && analysis.strengths.length > 0 && e(Carousel, {
+                        key: 'strengths',
+                        title: ' Pontos Fortes',
+                        items: analysis.strengths,
+                        icon: '',
+                        color: 'green'
+                    }),
+
+                    // Improvements Carousel
+                    analysis.improvements && analysis.improvements.length > 0 && e(Carousel, {
+                        key: 'improvements',
+                        title: ' Áreas de Melhoria',
+                        items: analysis.improvements,
+                        icon: '',
+                        color: 'yellow'
+                    }),
+
+                    // Salary Range (no carousel needed, single item)
+                    analysis.salaryRange && e('div', { key: 'salary', className: 'mb-6' }, [
+                        e('h3', {
+                            className: 'text-lg font-semibold text-green-400 mb-3 text-center'
+                        }, ' Faixa Salarial Estimada'),
+                        e('div', {
+                            className: 'executive-carousel-card'
+                        }, [
+                            e('div', {
+                                className: 'text-3xl mb-2 text-green-400'
+                            }, ''),
+                            e('p', {
+                                className: 'text-center font-medium text-xl'
+                            }, `R$ ${analysis.salaryRange.min?.toLocaleString()} - R$ ${analysis.salaryRange.max?.toLocaleString()}`)
+                        ])
+                    ]),
+
+                    // Career Advice (no carousel needed, single item)
+                    analysis.careerAdvice && e('div', { key: 'advice', className: 'mb-6' }, [
+                        e('h3', {
+                            className: 'text-lg font-semibold text-purple-400 mb-3 text-center'
+                        }, ' Conselhos de Carreira'),
+                        e('div', {
+                            className: 'executive-carousel-card'
+                        }, [
+                            e('div', {
+                                className: 'text-3xl mb-2 text-purple-400'
+                            }, ''),
+                            e('p', {
+                                className: 'text-center leading-relaxed'
+                            }, analysis.careerAdvice)
+                        ])
+                    ]),
+
+                    // Next Steps Carousel
+                    analysis.nextSteps && analysis.nextSteps.length > 0 && e(Carousel, {
+                        key: 'next-steps',
+                        title: ' Próximos Passos',
+                        items: analysis.nextSteps,
+                        icon: '',
+                        color: 'blue'
+                    })
+                ])
+            ]);
+        };
+
+        const ChatMessage = ({ message }) => {
+            const isUser = message.role === 'user';
+            
+            return e('div', {
+                className: 'executive-message fade-in-scale'
+            }, [
+                e('div', {
+                    key: 'message',
+                    className: `${isUser ? 'ml-8' : 'mr-8'} mb-4`
+                }, [
+                    e('div', {
+                        key: 'header',
+                        className: `flex items-center mb-2 ${isUser ? 'justify-end' : 'justify-start'}`
+                    }, [
+                        !isUser && e(BotIcon, { key: 'icon' }),
+                        e('span', {
+                            key: 'label',
+                            className: `text-sm font-medium ${isUser ? 'mr-2' : 'ml-2'} ${isUser ? 'text-blue-400' : 'text-green-400'}`
+                        }, isUser ? 'Você' : 'Assistente'),
+                        isUser && e(UserIcon, { key: 'icon' })
+                    ]),
+                    e('div', {
+                        key: 'content',
+                        className: `p-3 rounded-lg ${isUser 
+                            ? 'bg-blue-600 text-white' 
+                            : 'bg-gray-700 text-gray-100'} whitespace-pre-wrap text-sm leading-relaxed`
+                    }, message.content.text || message.content)
+                ])
+            ]);
+        };
+
+        // Chat Column Component
+        const ChatColumn = ({ chatMessages, onSendMessage, isLoading, isTyping }) => {
+            const messagesEndRef = useRef(null);
+
+            useEffect(() => {
+                if (messagesEndRef.current) {
+                    messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+                }
+            }, [chatMessages, isTyping]);
+
+            return e('div', {
+                className: 'executive-chat-column'
+            }, [
+                e('div', {
+                    key: 'header',
+                    className: 'executive-chat-header'
+                }, [
+                    e('div', {
+                        key: 'title',
+                        className: 'executive-title'
+                    }, [
+                        e('span', { key: 'icon' }, ''),
+                        e('span', { key: 'text' }, 'Conversa com IA')
+                    ])
+                ]),
+                e('div', {
+                    key: 'messages',
+                    className: 'executive-chat-messages'
+                }, [
+                    ...chatMessages.map(message => 
+                        e(ChatMessage, {
+                            key: message.id,
+                            message
+                        })
+                    ),
+                    isTyping && e(TypingIndicator, { key: 'typing' }),
+                    e('div', {
+                        key: 'scroll-anchor',
+                        ref: messagesEndRef
+                    })
+                ]),
+                e('div', {
+                    key: 'input',
+                    className: 'executive-chat-input'
+                }, [
+                    e(MessageInput, {
+                        onSendMessage,
+                        isLoading,
+                        disabled: false,
+                        placeholder: 'Digite sua pergunta sobre o CV...'
+                    })
+                ])
+            ]);
+        };
+
+        // Analysis Column Component
+        const AnalysisColumn = ({ analysis, fileName }) => {
+            return e('div', {
+                className: 'executive-analysis-column'
+            }, [
+                e('div', {
+                    key: 'header',
+                    className: 'executive-analysis-header'
+                }, [
+                    e('div', {
+                        key: 'title',
+                        className: 'executive-title'
+                    }, [
+                        e('span', { key: 'icon' }, ''),
+                        e('span', { key: 'text' }, 'Análise do CV')
+                    ]),
+                    fileName && e('div', {
+                        key: 'filename',
+                        className: 'text-sm text-gray-400 mt-1'
+                    }, ` ${fileName}`)
+                ]),
+                e('div', {
+                    key: 'content',
+                    className: 'executive-analysis-content'
+                }, [
+                    // Job Title
+                    analysis.jobTitle && e('div', { key: 'job-title', className: 'mb-6' }, [
+                        e('h3', {
+                            className: 'text-lg font-semibold text-blue-400 mb-3 text-center'
+                        }, ' Título Profissional'),
+                        e('div', {
+                            className: 'executive-carousel-card'
+                        }, [
+                            e('div', {
+                                className: 'text-3xl mb-2 text-blue-400'
+                            }, ''),
+                            e('p', {
+                                className: 'text-center font-medium'
+                            }, analysis.jobTitle)
+                        ])
+                    ]),
+
+                    // Job Summary
+                    analysis.jobSummary && e('div', { key: 'summary', className: 'mb-6' }, [
+                        e('h3', {
+                            className: 'text-lg font-semibold text-blue-400 mb-3 text-center'
+                        }, ' Resumo Profissional'),
+                        e('div', {
+                            className: 'executive-carousel-card'
+                        }, [
+                            e('div', {
+                                className: 'text-3xl mb-2 text-blue-400'
+                            }, ''),
+                            e('p', {
+                                className: 'text-center leading-relaxed'
+                            }, analysis.jobSummary)
+                        ])
+                    ]),
+
+                    // Strengths Carousel
+                    analysis.strengths && analysis.strengths.length > 0 && e(Carousel, {
+                        key: 'strengths',
+                        title: ' Pontos Fortes',
+                        items: analysis.strengths,
+                        icon: '',
+                        color: 'green'
+                    }),
+
+                    // Improvements Carousel
+                    analysis.improvements && analysis.improvements.length > 0 && e(Carousel, {
+                        key: 'improvements',
+                        title: ' Áreas de Melhoria',
+                        items: analysis.improvements,
+                        icon: '',
+                        color: 'yellow'
+                    }),
+
+                    // Salary Range
+                    analysis.salaryRange && e('div', { key: 'salary', className: 'mb-6' }, [
+                        e('h3', {
+                            className: 'text-lg font-semibold text-green-400 mb-3 text-center'
+                        }, ' Faixa Salarial Estimada'),
+                        e('div', {
+                            className: 'executive-carousel-card'
+                        }, [
+                            e('div', {
+                                className: 'text-3xl mb-2 text-green-400'
+                            }, ''),
+                            e('p', {
+                                className: 'text-center font-medium text-xl'
+                            }, `R$ ${analysis.salaryRange.min?.toLocaleString()} - R$ ${analysis.salaryRange.max?.toLocaleString()}`)
+                        ])
+                    ]),
+
+                    // Career Advice
+                    analysis.careerAdvice && e('div', { key: 'advice', className: 'mb-6' }, [
+                        e('h3', {
+                            className: 'text-lg font-semibold text-purple-400 mb-3 text-center'
+                        }, ' Conselhos de Carreira'),
+                        e('div', {
+                            className: 'executive-carousel-card'
+                        }, [
+                            e('div', {
+                                className: 'text-3xl mb-2 text-purple-400'
+                            }, ''),
+                            e('p', {
+                                className: 'text-center leading-relaxed'
+                            }, analysis.careerAdvice)
+                        ])
+                    ]),
+
+                    // Next Steps Carousel
+                    analysis.nextSteps && analysis.nextSteps.length > 0 && e(Carousel, {
+                        key: 'next-steps',
+                        title: ' Próximos Passos',
+                        items: analysis.nextSteps,
+                        icon: '',
+                        color: 'blue'
+                    })
+                ])
+            ]);
+        };
+
+        // Message Input Component
+        const MessageInput = ({ onSendMessage, isLoading, disabled, placeholder }) => {
+            const [inputValue, setInputValue] = useState('');
+
+            const handleSubmit = (e) => {
+                e.preventDefault();
+                if (inputValue.trim() && !isLoading && !disabled) {
+                    onSendMessage(inputValue.trim());
+                    setInputValue('');
+                }
+            };
+
+            const handleKeyPress = (e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    handleSubmit(e);
+                }
+            };
+
+            const defaultPlaceholder = disabled ? 'Faça upload de um CV para começar...' : 'Digite sua pergunta...';
+
+            return e('form', {
+                onSubmit: handleSubmit,
+                className: 'flex gap-2'
+            }, [
+                e('input', {
+                    key: 'input',
+                    type: 'text',
+                    value: inputValue,
+                    onChange: (e) => setInputValue(e.target.value),
+                    onKeyPress: handleKeyPress,
+                    placeholder: placeholder || defaultPlaceholder,
+                    className: 'executive-input flex-1',
+                    disabled: isLoading || disabled
+                }),
+                e('button', {
+                    key: 'button',
+                    type: 'submit',
+                    className: 'executive-button flex items-center',
+                    disabled: isLoading || disabled || !inputValue.trim()
+                }, [
+                    isLoading ? e('div', {
+                        key: 'spinner',
+                        className: 'spinner'
+                    }) : e(SendIcon, { key: 'icon' }),
+                    e('span', {
+                        key: 'text',
+                        className: 'ml-1 hidden sm:inline'
+                    }, 'Enviar')
+                ])
+            ]);
+        };
+
+        // Main App Component
+        const App = () => {
+            const [chatMessages, setChatMessages] = useState([]);
+            const [analysis, setAnalysis] = useState(null);
+            const [fileName, setFileName] = useState('');
+            const [isLoading, setIsLoading] = useState(false);
+            const [isTyping, setIsTyping] = useState(false);
+            const [error, setError] = useState(null);
+            const [headerVisible, setHeaderVisible] = useState(true);
+            const [headerCompact, setHeaderCompact] = useState(false);
+            const chatRef = useRef(null);
+            const objectUrls = useRef([]);
+            const lastScrollY = useRef(0);
+
+            const handleFileUpload = useCallback(async (file) => {
+                if (!file) return;
+
+                handleReset();
+                setIsLoading(true);
+                setError(null);
+                setFileName(file.name);
+
+                const newFileUrl = URL.createObjectURL(file);
+                objectUrls.current.push(newFileUrl);
+
+                try {
+                    const result = await analyzeCV(file);
+                    chatRef.current = result.chat;
+                    
+                    // Set the analysis for the carousel
+                    setAnalysis(result.analysis);
+                    
+                    // Add initial chat message with the explanation
+                    const initialChatMessage = {
+                        id: Date.now().toString(),
+                        role: 'assistant',
+                        content: result.chatExplanation
+                    };
+                    setChatMessages([initialChatMessage]);
+                } catch (err) {
+                    console.error('Erro ao analisar CV:', err);
+                    setError(err.message || 'Erro ao analisar o CV. Tente novamente.');
+                } finally {
+                    setIsLoading(false);
+                }
+            }, []);
+
+            const handleSendMessage = useCallback(async (messageText) => {
+                if (!chatRef.current) return;
+
+                // Add user message to chat
+                const userMessage = {
+                    id: Date.now().toString(),
+                    role: 'user',
+                    content: messageText
+                };
+                setChatMessages(prev => [...prev, userMessage]);
+                
+                setIsTyping(true);
+                setError(null);
+
+                try {
+                    // Determine if this message should update the analysis
+                    const shouldUpdateAnalysis = messageText.toLowerCase().includes('atualiz') ||
+                                               messageText.toLowerCase().includes('mudar') ||
+                                               messageText.toLowerCase().includes('alterar') ||
+                                               messageText.toLowerCase().includes('remover') ||
+                                               messageText.toLowerCase().includes('adicionar') ||
+                                               messageText.toLowerCase().includes('modificar');
+
+                    const response = await continueChat(chatRef.current, messageText, shouldUpdateAnalysis);
+                    
+                    // Add assistant message to chat
+                    const botMessage = {
+                        id: (Date.now() + 1).toString(),
+                        role: 'assistant',
+                        content: response.chatResponse
+                    };
+                    setChatMessages(prev => [...prev, botMessage]);
+                    
+                    // Update analysis if needed
+                    if (response.hasUpdate && response.updatedAnalysis) {
+                        setAnalysis(response.updatedAnalysis);
+                    }
+                } catch (err) {
+                    console.error('Erro no chat:', err);
+                    setError(err.message || 'Erro ao enviar mensagem. Tente novamente.');
+                } finally {
+                    setIsTyping(false);
+                }
+            }, []);
+
+            const handleReset = useCallback(() => {
+                objectUrls.current.forEach(url => URL.revokeObjectURL(url));
+                objectUrls.current = [];
+                setChatMessages([]);
+                setAnalysis(null);
+                setFileName('');
+                setError(null);
+                chatRef.current = null;
+            }, []);
+
+            useEffect(() => {
+                return () => {
+                    objectUrls.current.forEach(url => URL.revokeObjectURL(url));
+                };
+            }, []);
+
+            // Header scroll behavior
+            useEffect(() => {
+                const handleScroll = () => {
+                    const currentScrollY = window.scrollY;
+                    const threshold = 100;
+                    
+                    // Show/hide header based on scroll direction
+                    if (currentScrollY > lastScrollY.current && currentScrollY > threshold) {
+                        setHeaderVisible(false);
+                    } else {
+                        setHeaderVisible(true);
+                    }
+                    
+                    // Make header compact when scrolled
+                    setHeaderCompact(currentScrollY > 50);
+                    
+                    lastScrollY.current = currentScrollY;
+                };
+
+                window.addEventListener('scroll', handleScroll, { passive: true });
+                return () => window.removeEventListener('scroll', handleScroll);
+            }, []);
+
+            return e('div', {
+                className: 'min-h-screen bg-gray-900 text-gray-200'
+            }, [
+                e('div', {
+                    key: 'container',
+                    className: 'container mx-auto px-6 py-8 max-w-7xl'
+                }, [
+                    // Fixed Header
+                    e('header', {
+                        key: 'header',
+                        className: `corporate-header p-6 ${!headerVisible ? 'hidden' : ''} ${headerCompact ? 'compact' : ''}`
+                    }, [
+                        e('div', {
+                            className: 'container mx-auto flex justify-between items-center'
+                        }, [
+                            e('h1', {
+                                key: 'title',
+                                className: 'text-4xl font-bold gradient-text-executive'
+                            }, 'Merece Quanto'),
+                            analysis && e('button', {
+                                key: 'reset',
+                                onClick: handleReset,
+                                className: 'secondary-button'
+                            }, 'Nova Análise')
+                        ]),
+                        !headerCompact && e('p', {
+                            key: 'subtitle',
+                            className: 'text-center text-xl text-gray-300 font-medium mt-2'
+                        }, 'Análise Executiva de CV com Inteligência Artificial')
+                    ]),
+
+                    // Hero Landing Section (only shown when no analysis)
+                    !analysis && e('section', {
+                        key: 'hero',
+                        className: 'hero-section'
+                    }, [
+                        e('div', {
+                            className: 'hero-content'
+                        }, [
+                            e('h1', {
+                                className: 'hero-title'
+                            }, 'Transforme Seu Currículo em Oportunidades'),
+                            e('p', {
+                                className: 'hero-subtitle'
+                            }, 'Análise Profissional com Inteligência Artificial Avançada'),
+                            e('p', {
+                                className: 'hero-description'
+                            }, 'Descubra seu valor de mercado, identifique pontos fortes e receba recomendações personalizadas para acelerar sua carreira profissional.'),
+                            
+                            e(FileUpload, {
+                                key: 'hero-upload',
+                                onFileUpload: handleFileUpload,
+                                isLoading,
+                                heroMode: true
+                            })
+                        ])
+                    ]),
+
+                    error && e('div', {
+                        key: 'error',
+                        className: 'executive-alert mb-6 max-w-2xl mx-auto'
+                    }, error),
+
+                    analysis && e('div', {
+                        key: 'analysis-container',
+                        className: 'pt-32'
+                    }, [
+                        e('div', {
+                            key: 'executive-layout',
+                            className: 'executive-layout'
+                    }, [
+                        e(ChatColumn, {
+                            key: 'chat',
+                            chatMessages,
+                            onSendMessage: handleSendMessage,
+                            isLoading,
+                            isTyping
+                        }),
+                        e(AnalysisColumn, {
+                            key: 'analysis',
+                            analysis,
+                            fileName
+                        })
+                    ])
+                    ])
+                ])
+            ]);
+        };
+
+        // Render the app
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(e(App));
+    </script>
+</body>
+</html>
